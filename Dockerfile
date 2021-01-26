@@ -1,4 +1,4 @@
-FROM node:12.9-alpine
+FROM node:14.15.1-alpine3.12
 RUN apk update && \
     apk add --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.10/community \
         libstdc++ g++ gnu-libiconv make cmake git && \
