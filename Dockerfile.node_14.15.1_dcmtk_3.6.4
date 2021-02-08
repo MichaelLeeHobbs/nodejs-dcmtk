@@ -3,7 +3,9 @@ RUN apk update && \
     apk add --update-cache --repository http://dl-cdn.alpinelinux.org/alpine/v3.10/community \
         libstdc++ g++ gnu-libiconv make cmake git && \
         git clone https://github.com/DCMTK/dcmtk.git && \
-        git git checkout tags/DCMTK-3.6.4 && \
+        cd dcmtk && \
+        git checkout tags/DCMTK-3.6.4 && \
+        cd .. && \
 #    cd dcmtk && \
 #    ./configure && \
 #    make all && \
