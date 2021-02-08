@@ -6,17 +6,11 @@ RUN apk update && \
         cd dcmtk-src && \
         git checkout tags/DCMTK-3.6.4 && \
         cd .. && \
-#    cd dcmtk && \
-#    ./configure && \
-#    make all && \
-#    make install && \
-#    make distclean && \
-# start build
-    mkdir dcmtk-build && \
-    cd dcmtk-build && \
-    cmake ../dcmtk-src && \
-    make -j8 && \
-    make DESTDIR=../dcmtk install && \
+        mkdir dcmtk-build && \
+        cd dcmtk-build && \
+        cmake ../dcmtk-src && \
+        make -j8 && \
+        make DESTDIR=../dcmtk install && \
 # end build
     cd .. && \
     rm -r dcmtk-src && \
