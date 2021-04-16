@@ -10,8 +10,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Build Node 14.15.1 and DCMTK 3.6.4
-      run: docker build . --file Dockerfile.node_14.15.1_dcmtk_3.6.4 --tag nodejs-dcmtk:$(date +%s)
+    - name: Build Node 14.15.1 and DCMTK 3.6.6
+      run: docker build . --file Dockerfile.node_14.15.1_dcmtk_3.6.6 --tag nodejs-dcmtk:$(date +%s)
 
     - uses: actions/checkout@master
     - name: Publish to Registry
