@@ -1,20 +1,17 @@
 name: Docker Image CI & Publish
 
-on: [push]
+on: [ push ]
 
 jobs:
-
   build:
-    build-dcmtk-3-6-6:
+    build_v3.6.6:
       runs-on: ubuntu-latest
-
       steps:
       - uses: actions/checkout@v1
       - name: Build and Publish DCMTK 3.6.6
-        run: docker build . --file Dockerfile.node_14.15.1_dcmtk_3.6.6 --tag nodejs-dcmtk:$(date +%s)
-
-      - uses: actions/checkout@master
-      - name: Publish to Registry
+        env:
+          DCMTK_VER: 3.6.6
+        #        run: docker build . --file Dockerfile.node_14.15.1_dcmtk_3.6.6 --tag nodejs-dcmtk:$(date +%s)
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: michaelleehobbs/nodejs-dcmtk
@@ -25,16 +22,13 @@ jobs:
           push: ${{ startsWith(github.ref, 'refs/heads/r') }}
           tags: "v3.6.6"
 
-    build-dcmtk-3-6-4:
+    build_v3.6.4:
       runs-on: ubuntu-latest
-
       steps:
         - uses: actions/checkout@v1
-        - name: Build Node 14.15.1 and DCMTK 3.6.4
-          run: docker build . --file Dockerfile.node_14.15.1_dcmtk_3.6.4 --tag nodejs-dcmtk:$(date +%s)
-
-        - uses: actions/checkout@master
-        - name: Publish to Registry
+        - name: Build and Publish DCMTK 3.6.4
+          env:
+            DCMTK_VER: 3.6.4
           uses: elgohr/Publish-Docker-Github-Action@master
           with:
             name: michaelleehobbs/nodejs-dcmtk
