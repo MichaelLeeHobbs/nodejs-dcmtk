@@ -16,6 +16,7 @@ RUN apk update && \
     && make -j16 \
     # && cd dcmtk-install \
     && make install \
+    && make distclean \
 # end build
     && cd .. \
     && rm -r dcmtk-src \
