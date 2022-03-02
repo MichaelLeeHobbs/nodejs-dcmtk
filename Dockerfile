@@ -1,4 +1,5 @@
-FROM node:14.15.1-alpine3.12
+#FROM node:14.15.1-alpine3.12
+FROM node:16.14.0-alpine3.14
 ARG DCMTK_VER=3.6.6
 
 RUN apk update && \

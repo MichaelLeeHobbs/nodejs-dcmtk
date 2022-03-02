@@ -18,7 +18,7 @@ jobs:
         tag_with_ref: true
         tag_with_sha: true
         push: ${{ startsWith(github.ref, 'refs/heads/r') }}
-        tags: "v3.6.6"
+        tags: "dcmtk3.6.6-nodejs16.14.0-alpine3.14"
 
   build_3_6_4:
     runs-on: ubuntu-latest
@@ -35,4 +35,4 @@ jobs:
           tag_with_ref: true
           tag_with_sha: true
           push: ${{ startsWith(github.ref, 'refs/heads/r') }}
-          tags: "v3.6.4"
+          tags: "dcmtk3.6.4-nodejs16.14.0-alpine3.14"
