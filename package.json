@@ -1,0 +1,12 @@
+{
+  "name": "nodejs-alpine-dcmtk",
+  "version": "0.0.0",
+  "dependencies": {
+    "handlebars": "^4.7.7"
+  },
+  "scripts": {
+    "patch": "npm version patch && git push",
+    "minor": "npm version minor && git push",
+    "major": "npm version major && git push"
+  }
+}

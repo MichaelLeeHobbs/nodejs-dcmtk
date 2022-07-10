@@ -1,0 +1,6 @@
+name: Docker Image CI & Publish
+
+on: [ push ]
+
+jobs:
+{{jobs}}
