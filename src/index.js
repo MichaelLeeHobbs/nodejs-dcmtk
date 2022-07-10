@@ -48,6 +48,7 @@ const main = async () => {
         .replace(/\[\[/g, '{{')
         .replace(/]]/g, '}}')
         .replace(/&quot;/g, '"')
+        .replace(/&#x27;/g, "'")
 
     await fs.writeFile(path.resolve(__dirname, `../.github/workflows/dockerimage.yml`), workflowYml)
 }
