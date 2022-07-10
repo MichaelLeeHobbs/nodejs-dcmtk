@@ -1,26 +1,29 @@
-#FROM node:14.15.1-alpine3.12
-FROM node:16.14.0-alpine3.14
-ARG DCMTK_VER=3.6.6
+ARG ALPINE_VER=3.14
+ARG NODE_VER=16.14.0
+
+FROM alpine:$ALPINE_VER AS builder
+
+ARG DCMTK_VER=3.6.7
 
 RUN apk update && \
     apk add --no-cache \
-        # not sure why we add a repository
-        # --repository http://dl-cdn.alpinelinux.org/alpine/v3.10/community \
-        libstdc++ g++ gnu-libiconv make cmake git \
-    && git clone https://github.com/DCMTK/dcmtk.git dcmtk-src \
+        libstdc++ g++ gnu-libiconv make cmake git rsync
+WORKDIR /usr/src/app
+RUN git clone https://github.com/DCMTK/dcmtk.git dcmtk-src  \
     && cd dcmtk-src \
     && git checkout tags/DCMTK-$DCMTK_VER \
     && cd .. \
-    && mkdir dcmtk-install \
-    && cd dcmtk-install \
-    && cmake DCMTK_ENABLE_BUILTIN_DICTIONARY:BOOL=TRUE ../dcmtk-src \
-    && make -j16 \
-    # && cd dcmtk-install \
-    && make install \
-# end build
-    && cd .. \
-    && rm -r dcmtk-src \
-    && apk del g++ make git \
-    && rm /var/cache/apk/*
+    && mkdir dcmtk-install
+
+#RUN cd dcmtk-install && cmake DCMTK_USE_DCMDICTPATH:BOOL=TRUE CMAKE_INSTALL_PREFIX:PATH=/out ../dcmtk-src  \
+RUN cd dcmtk-install && cmake DCMTK_USE_DCMDICTPATH:BOOL=TRUE ../dcmtk-src  \
+    && make -j16
+RUN cd dcmtk-install && make install
+
+
+RUN mkdir /out && rsync --files-from=dcmtk-install/install_manifest.txt / /out
+
+FROM node:$NODE_VER-alpine$ALPINE_VER
+COPY --from=builder /out/ /
 
 ENV DCMDICTPATH /usr/local/share/dcmtk/dicom.dic
