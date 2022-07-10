@@ -1,9 +1,9 @@
-ARG ALPINE_VER=3.14
-ARG NODE_VER=16.14.0
+ARG ALPINE_VER
+ARG NODE_VER
 
 FROM alpine:$ALPINE_VER AS builder
 
-ARG DCMTK_VER=3.6.7
+ARG DCMTK_VER
 
 RUN apk update && \
     apk add --no-cache \

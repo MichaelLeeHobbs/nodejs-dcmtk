@@ -1,1 +1,1 @@
-docker build . --cache-from node:16.14.0-alpine3.14 --progress plain -t michaelleehobbs/nodejs-dcmtk:dcmtk3.6.6-nodejs16.14.0-alpine3.14
+docker build . --build-arg ALPINE_VER=3.16 --build-arg NODE_VER=18.5.0 --build-arg DCMTK_VER=3.6.7 --progress plain -t nodejs-dcmtk-test
