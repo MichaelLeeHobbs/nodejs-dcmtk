@@ -3,13 +3,15 @@ name: Docker Image CI & Publish
 on: [ push ]
 
 jobs:
-  build_3_6_6:
+  build_dcmtk3_6_4_nodejs18_5_0_alpine3_16:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Build and Publish DCMTK 3.6.6
+    - name: Build and Publish DCMTK 3.6.4
       env:
-        DCMTK_VER: 3.6.6
+        DCMTK_VER: 3.6.4
+        ALPINE_VER: 3.16
+        NODE_VER: 18.5.0
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: michaelleehobbs/nodejs-dcmtk
@@ -17,22 +19,406 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         tag_with_ref: true
         tag_with_sha: true
-        push: ${{ startsWith(github.ref, 'refs/heads/r') }}
-        tags: "dcmtk3.6.6-nodejs16.14.0-alpine3.14"
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.4-nodejs18.5.0-alpine3.16"
 
-  build_3_6_4:
+
+  build_dcmtk3_6_4_nodejs18_5_0_alpine3_15:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Build and Publish DCMTK 3.6.4
-        env:
-          DCMTK_VER: 3.6.4
-        uses: elgohr/Publish-Docker-Github-Action@master
-        with:
-          name: michaelleehobbs/nodejs-dcmtk
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          tag_with_ref: true
-          tag_with_sha: true
-          push: ${{ startsWith(github.ref, 'refs/heads/r') }}
-          tags: "dcmtk3.6.4-nodejs16.14.0-alpine3.14"
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.4
+      env:
+        DCMTK_VER: 3.6.4
+        ALPINE_VER: 3.15
+        NODE_VER: 18.5.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.4-nodejs18.5.0-alpine3.15"
+
+
+  build_dcmtk3_6_4_nodejs16_16_0_alpine3_16:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.4
+      env:
+        DCMTK_VER: 3.6.4
+        ALPINE_VER: 3.16
+        NODE_VER: 16.16.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.4-nodejs16.16.0-alpine3.16"
+
+
+  build_dcmtk3_6_4_nodejs16_16_0_alpine3_15:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.4
+      env:
+        DCMTK_VER: 3.6.4
+        ALPINE_VER: 3.15
+        NODE_VER: 16.16.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.4-nodejs16.16.0-alpine3.15"
+
+
+  build_dcmtk3_6_4_nodejs16_14_0_alpine3_14:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.4
+      env:
+        DCMTK_VER: 3.6.4
+        ALPINE_VER: 3.14
+        NODE_VER: 16.14.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.4-nodejs16.14.0-alpine3.14"
+
+
+  build_dcmtk3_6_4_nodejs14_20_0_alpine3_16:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.4
+      env:
+        DCMTK_VER: 3.6.4
+        ALPINE_VER: 3.16
+        NODE_VER: 14.20.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.4-nodejs14.20.0-alpine3.16"
+
+
+  build_dcmtk3_6_4_nodejs14_20_0_alpine3_15:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.4
+      env:
+        DCMTK_VER: 3.6.4
+        ALPINE_VER: 3.15
+        NODE_VER: 14.20.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.4-nodejs14.20.0-alpine3.15"
+
+
+  build_dcmtk3_6_6_nodejs18_5_0_alpine3_16:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.6
+      env:
+        DCMTK_VER: 3.6.6
+        ALPINE_VER: 3.16
+        NODE_VER: 18.5.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.6-nodejs18.5.0-alpine3.16"
+
+
+  build_dcmtk3_6_6_nodejs18_5_0_alpine3_15:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.6
+      env:
+        DCMTK_VER: 3.6.6
+        ALPINE_VER: 3.15
+        NODE_VER: 18.5.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.6-nodejs18.5.0-alpine3.15"
+
+
+  build_dcmtk3_6_6_nodejs16_16_0_alpine3_16:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.6
+      env:
+        DCMTK_VER: 3.6.6
+        ALPINE_VER: 3.16
+        NODE_VER: 16.16.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.6-nodejs16.16.0-alpine3.16"
+
+
+  build_dcmtk3_6_6_nodejs16_16_0_alpine3_15:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.6
+      env:
+        DCMTK_VER: 3.6.6
+        ALPINE_VER: 3.15
+        NODE_VER: 16.16.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.6-nodejs16.16.0-alpine3.15"
+
+
+  build_dcmtk3_6_6_nodejs16_14_0_alpine3_14:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.6
+      env:
+        DCMTK_VER: 3.6.6
+        ALPINE_VER: 3.14
+        NODE_VER: 16.14.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.6-nodejs16.14.0-alpine3.14"
+
+
+  build_dcmtk3_6_6_nodejs14_20_0_alpine3_16:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.6
+      env:
+        DCMTK_VER: 3.6.6
+        ALPINE_VER: 3.16
+        NODE_VER: 14.20.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.6-nodejs14.20.0-alpine3.16"
+
+
+  build_dcmtk3_6_6_nodejs14_20_0_alpine3_15:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.6
+      env:
+        DCMTK_VER: 3.6.6
+        ALPINE_VER: 3.15
+        NODE_VER: 14.20.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.6-nodejs14.20.0-alpine3.15"
+
+
+  build_dcmtk3_6_7_nodejs18_5_0_alpine3_16:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.7
+      env:
+        DCMTK_VER: 3.6.7
+        ALPINE_VER: 3.16
+        NODE_VER: 18.5.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.7-nodejs18.5.0-alpine3.16"
+
+
+  build_dcmtk3_6_7_nodejs18_5_0_alpine3_15:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.7
+      env:
+        DCMTK_VER: 3.6.7
+        ALPINE_VER: 3.15
+        NODE_VER: 18.5.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.7-nodejs18.5.0-alpine3.15"
+
+
+  build_dcmtk3_6_7_nodejs16_16_0_alpine3_16:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.7
+      env:
+        DCMTK_VER: 3.6.7
+        ALPINE_VER: 3.16
+        NODE_VER: 16.16.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.7-nodejs16.16.0-alpine3.16"
+
+
+  build_dcmtk3_6_7_nodejs16_16_0_alpine3_15:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.7
+      env:
+        DCMTK_VER: 3.6.7
+        ALPINE_VER: 3.15
+        NODE_VER: 16.16.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.7-nodejs16.16.0-alpine3.15"
+
+
+  build_dcmtk3_6_7_nodejs16_14_0_alpine3_14:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.7
+      env:
+        DCMTK_VER: 3.6.7
+        ALPINE_VER: 3.14
+        NODE_VER: 16.14.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.7-nodejs16.14.0-alpine3.14"
+
+
+  build_dcmtk3_6_7_nodejs14_20_0_alpine3_16:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.7
+      env:
+        DCMTK_VER: 3.6.7
+        ALPINE_VER: 3.16
+        NODE_VER: 14.20.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.7-nodejs14.20.0-alpine3.16"
+
+
+  build_dcmtk3_6_7_nodejs14_20_0_alpine3_15:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.7
+      env:
+        DCMTK_VER: 3.6.7
+        ALPINE_VER: 3.15
+        NODE_VER: 14.20.0
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, &#x27;refs/heads/r&#x27;) }}
+        tags: "dcmtk3.6.7-nodejs14.20.0-alpine3.15"
+

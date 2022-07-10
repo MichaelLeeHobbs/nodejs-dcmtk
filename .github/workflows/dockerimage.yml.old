@@ -1,0 +1,38 @@
+name: Docker Image CI & Publish
+
+on: [ push ]
+
+jobs:
+  build_3_6_6:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Publish DCMTK 3.6.6
+      env:
+        DCMTK_VER: 3.6.6
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: michaelleehobbs/nodejs-dcmtk
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        tag_with_ref: true
+        tag_with_sha: true
+        push: ${{ startsWith(github.ref, 'refs/heads/r') }}
+        tags: "dcmtk3.6.6-nodejs16.14.0-alpine3.14"
+
+  build_3_6_4:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build and Publish DCMTK 3.6.4
+        env:
+          DCMTK_VER: 3.6.4
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: michaelleehobbs/nodejs-dcmtk
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tag_with_ref: true
+          tag_with_sha: true
+          push: ${{ startsWith(github.ref, 'refs/heads/r') }}
+          tags: "dcmtk3.6.4-nodejs16.14.0-alpine3.14"
