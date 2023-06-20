@@ -1,64 +1,29 @@
 name: Docker Image CI & Publish
 
-on: [ push ]
+on: [push]
 
 jobs:
-  build_dcmtk3_6_4_nodejs18_16_0_alpine3_18:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dcmtk_version: ['3.6.4', '3.6.6', '3.6.7']
+        node_version: ['20.3.0', '18.16.0', '16.20.0']
+        alpine_version: ['3.18']
     steps:
-    - uses: actions/checkout@v1
-    - name: Build and Publish DCMTK 3.6.4 NodeJS 18.16.0 Alpine 3.18
-      env:
-        DCMTK_VER: 3.6.4
-        ALPINE_VER: 3.18
-        NODE_VER: 18.16.0
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: michaelleehobbs/nodejs-dcmtk
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        buildargs: DCMTK_VER,ALPINE_VER,NODE_VER
-        tag_with_ref: true
-        tag_with_sha: true
-        push: ${{ startsWith(github.ref, 'refs/heads/r') }}
-        tags: "dcmtk3.6.4-nodejs18.16.0-alpine3.18"
-
-  build_dcmtk3_6_6_nodejs18_16_0_alpine3_18:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Build and Publish DCMTK 3.6.6 NodeJS 18.16.0 Alpine 3.18
-      env:
-        DCMTK_VER: 3.6.6
-        ALPINE_VER: 3.18
-        NODE_VER: 18.16.0
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: michaelleehobbs/nodejs-dcmtk
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        buildargs: DCMTK_VER,ALPINE_VER,NODE_VER
-        tag_with_ref: true
-        tag_with_sha: true
-        push: ${{ startsWith(github.ref, 'refs/heads/r') }}
-        tags: "dcmtk3.6.6-nodejs18.16.0-alpine3.18"
-
-  build_dcmtk3_6_7_nodejs18_16_0_alpine3_18:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Build and Publish DCMTK 3.6.7 NodeJS 18.16.0 Alpine 3.18
-      env:
-        DCMTK_VER: 3.6.7
-        ALPINE_VER: 3.18
-        NODE_VER: 18.16.0
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: michaelleehobbs/nodejs-dcmtk
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        buildargs: DCMTK_VER,ALPINE_VER,NODE_VER
-        tag_with_ref: true
-        tag_with_sha: true
-        push: ${{ startsWith(github.ref, 'refs/heads/r') }}
-        tags: "dcmtk3.6.7-nodejs18.16.0-alpine3.18"
+      - uses: actions/checkout@v1
+      - name: Build and Publish DCMTK ${{ matrix.dcmtk_version }} NodeJS ${{ matrix.node_version }} Alpine 3.18
+        env:
+          DCMTK_VER: ${{ matrix.dcmtk_version }}
+          ALPINE_VER: ${{ matrix.alpine_version }}
+          NODE_VER: ${{ matrix.node_version }}
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: michaelleehobbs/nodejs-dcmtk
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          buildargs: DCMTK_VER,ALPINE_VER,NODE_VER
+          tag_with_ref: true
+          tag_with_sha: true
+          push: ${{ startsWith(github.ref, 'refs/heads/r') }}
+          tags: "dcmtk${{ matrix.dcmtk_version }}-nodejs${{ matrix.node_version }}-alpine${{ matrix.alpine_version }}"
