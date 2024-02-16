@@ -7,23 +7,21 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dcmtk_version: ['3.6.4', '3.6.6', '3.6.7']
-        node_version: ['20.11.1', '18.19.1', '16.20.2']
-        alpine_version: ['3.18']
+        dcmtk_version: ['3.6.4', '3.6.6', '3.6.7', '3.6.8']
+        node_version: ['20.11.1-alpine3.19', '20.11.1-alpine3.18', '18.19.1-alpine3.19', '18.19.1-alpine3.18', '16.20.2-alpine3.18']
     steps:
       - uses: actions/checkout@v1
-      - name: Build and Publish DCMTK ${{ matrix.dcmtk_version }} NodeJS ${{ matrix.node_version }} Alpine ${{ matrix.alpine_version }}
+      - name: Build and Publish DCMTK ${{ matrix.dcmtk_version }} NodeJS ${{ matrix.node_version }}
         env:
           DCMTK_VER: ${{ matrix.dcmtk_version }}
-          ALPINE_VER: ${{ matrix.alpine_version }}
           NODE_VER: ${{ matrix.node_version }}
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: michaelleehobbs/nodejs-dcmtk
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          buildargs: DCMTK_VER,ALPINE_VER,NODE_VER
+          buildargs: DCMTK_VER,NODE_VER
           tag_with_ref: true
           tag_with_sha: true
           push: ${{ startsWith(github.ref, 'refs/heads/r') }}
-          tags: "dcmtk${{ matrix.dcmtk_version }}-nodejs${{ matrix.node_version }}-alpine${{ matrix.alpine_version }}"
+          tags: "dcmtk-${{ matrix.dcmtk_version }}-nodejs-${{ matrix.node_version }}"
