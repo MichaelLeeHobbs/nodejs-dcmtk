@@ -9,7 +9,7 @@ jobs:
       matrix:
         dcmtk_version: ['3.6.4', '3.6.6', '3.6.7']
         node_version: ['20.11.1', '18.19.1', '16.20.2']
-        alpine_version: ['3.19', '3.18']
+        alpine_version: ['3.18']
     steps:
       - uses: actions/checkout@v1
       - name: Build and Publish DCMTK ${{ matrix.dcmtk_version }} NodeJS ${{ matrix.node_version }} Alpine ${{ matrix.alpine_version }}
