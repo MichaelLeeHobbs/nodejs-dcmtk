@@ -14,9 +14,7 @@ jobs:
           '18.20.3-alpine3.20', '18.20.3-alpine3.19'
         ]
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
+      - uses: actions/checkout@v1
       - name: Build and Publish DCMTK ${{ matrix.dcmtk_version }} NodeJS ${{ matrix.node_version }}
         env:
           DCMTK_VER: ${{ matrix.dcmtk_version }}
@@ -29,5 +27,5 @@ jobs:
           buildargs: DCMTK_VER,NODE_VER
           tag_with_ref: true
           tag_with_sha: true
+          push: ${{ startsWith(github.ref, 'refs/heads/r') }}
           tags: "dcmtk-${{ matrix.dcmtk_version }}-nodejs-${{ matrix.node_version }}"
-#        if: startsWith(github.ref, 'refs/heads/r')
