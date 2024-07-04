@@ -1,6 +1,6 @@
 ARG NODE_VER
 
-FROM node:$NODE_VER AS builder
+FROM alpine:3.18 AS builder
 
 ARG DCMTK_VER
 
@@ -25,4 +25,4 @@ RUN mkdir /out && rsync --files-from=dcmtk-install/install_manifest.txt / /out
 FROM node:$NODE_VER
 COPY --from=builder /out/ /
 
-ENV DCMDICTPATH /usr/local/share/dcmtk/dicom.dic
+ENV DCMDICTPATH /usr/local/share/$DCMTK_VER/dicom.dic

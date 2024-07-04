@@ -8,6 +8,9 @@
     "build": "node src",
     "patch": "npm version patch && git push",
     "minor": "npm version minor && git push",
-    "major": "npm version major && git push"
+    "major": "npm version major && git push",
+    "test:build": "docker build --build-arg NODE_VER=18.19.1-alpine3.18 --build-arg DCMTK_VER=3.6.7 -t dcmtk3.6.7-nodejs18.19.1-alpine3.18-dev .",
+    "test:build2": "docker build --build-arg NODE_VER=22.4.0-alpine3.20 --build-arg DCMTK_VER=3.6.8 -t dcmtk3.6.8-nodejs22.4.0-alpine3.20-dev .",
+    "start:image:sleep": "docker run -it --rm dcmtk3.6.8-nodejs22.4.0-alpine3.20-dev sleep 1000"
   }
 }
