@@ -1,5 +1,7 @@
-FROM alpine:3.18 AS builder
 ARG NODE_VER
+
+FROM alpine:3.18 AS builder
+
 ARG DCMTK_VER
 
 WORKDIR /usr/src/app
