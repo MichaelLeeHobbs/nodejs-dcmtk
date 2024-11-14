@@ -47,4 +47,4 @@ COPY --from=builder /out/ /
 #RUN ln -s /usr/local/share/dcmtk-$DCMTK_VER/dicom.dic /usr/local/share/dcmtk/dicom.dic
 
 # Set the DCMDICTPATH environment variable to the symlink
-ENV DCMDICTPATH /usr/local/share/dcmtk/dicom.dic
+ENV DCMDICTPATH /usr/local/share/dcmtk-$DCMTK_VER/dicom.dic
