@@ -44,7 +44,7 @@ COPY --from=builder /out/ /
 RUN mkdir -p /usr/local/share/dcmtk
 
 # Create the symbolic link in the final stage
-RUN ln -s /usr/local/share/$DCMTK_VER/dicom.dic /usr/local/share/dcmtk/dicom.dic
+RUN ln -s /usr/local/share/dcmtk-$DCMTK_VER/dicom.dic /usr/local/share/dcmtk/dicom.dic
 
 # Set the DCMDICTPATH environment variable to the symlink
 ENV DCMDICTPATH /usr/local/share/dcmtk/dicom.dic
