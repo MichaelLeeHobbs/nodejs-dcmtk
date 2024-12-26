@@ -37,6 +37,15 @@ FROM node:$NODE_VER
 # Define build arguments for the final stage
 ARG DCMTK_VER
 
+# Remove old cache files from the base image
+RUN apk cache clean \
+    && rm -rf /var/cache/apk/* \
+    && rm -rf /tmp/* \
+    && rm -rf /var/tmp/* \
+    && rm -rf /root/.npm \
+    && rm -rf /root/.cache \
+    && find / -type f -name "*.log" -delete
+
 # Copy the built DCMTK files from the builder stage
 COPY --from=builder /out/ /
 

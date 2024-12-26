@@ -1,6 +1,33 @@
+# .github/workflows/dockerimage.yml
 name: Docker Image CI & Publish
 
 on: [ push ]
+
+# Old way to build and publish the image
+#jobs:
+#  build:
+#    runs-on: ubuntu-22.04
+#    strategy:
+#      matrix:
+#        dcmtk_version: ['3.6.4', '3.6.6', '3.6.7', '3.6.8']
+#        node_version: [
+#          '22.11.0-alpine3.20', '22.11.0-alpine3.19',
+#          '20.18.0-alpine3.20', '20.18.0-alpine3.19',
+#          '18.20.4-alpine3.20', '18.20.4-alpine3.19',
+#        ]
+#    steps:
+#      - uses: actions/checkout@v1
+#      - name: Build and Publish DCMTK ${{ matrix.dcmtk_version }} NodeJS ${{ matrix.node_version }}
+#        env:
+#          DCMTK_VER: ${{ matrix.dcmtk_version }}
+#          NODE_VER: ${{ matrix.node_version }}
+#        uses: elgohr/Publish-Docker-Github-Action@master
+#        with:
+#          name: michaelleehobbs/nodejs-dcmtk
+#          username: ${{ secrets.DOCKER_USERNAME }}
+#          password: ${{ secrets.DOCKER_PASSWORD }}
+#          buildargs: DCMTK_VER,NODE_VER
+#          tags: "dcmtk-${{ matrix.dcmtk_version }}-nodejs-${{ matrix.node_version }}"
 
 jobs:
   build:
@@ -14,18 +41,29 @@ jobs:
           '18.20.4-alpine3.20', '18.20.4-alpine3.19',
         ]
     steps:
-      - uses: actions/checkout@v1
-      - name: Build and Publish DCMTK ${{ matrix.dcmtk_version }} NodeJS ${{ matrix.node_version }}
-        env:
-          DCMTK_VER: ${{ matrix.dcmtk_version }}
-          NODE_VER: ${{ matrix.node_version }}
-        uses: elgohr/Publish-Docker-Github-Action@master
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
         with:
-          name: michaelleehobbs/nodejs-dcmtk
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          buildargs: DCMTK_VER,NODE_VER
-          tags: "dcmtk-${{ matrix.dcmtk_version }}-nodejs-${{ matrix.node_version }}"
-#          tag_with_ref: true
-#          tag_with_sha: true
-#          push: ${{ startsWith(github.ref, 'refs/heads/r') }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: michaelleehobbs/nodejs-dcmtk:dcmtk-${{ matrix.dcmtk_version }}-nodejs-${{ matrix.node_version }}
+          build-args: |
+            DCMTK_VER=${{ matrix.dcmtk_version }}
+            NODE_VER=${{ matrix.node_version }}
+          platforms: linux/amd64,linux/arm64
+        env:
+          DOCKER_BUILDKIT: 1
+          BUILDKIT_INLINE_CACHE: 1
+          BUILDKIT_FRONTEND_ATTRS: >
+            {"moby.buildkit.frontend.inline-squash": "true"}
