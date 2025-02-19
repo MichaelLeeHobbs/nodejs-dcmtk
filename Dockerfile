@@ -57,10 +57,8 @@ RUN apk cache clean \
 # Copy the built DCMTK files from the builder stage
 COPY --from=builder /out/ /
 
-# (Optional) If you want to use a symbolic link for the DICOM dictionary,
-# you can uncomment and adjust the following commands:
-# RUN mkdir -p /usr/local/share/dcmtk
-# RUN ln -s /usr/local/share/dcmtk-$DCMTK_VER/dicom.dic /usr/local/share/dcmtk/dicom.dic
+# Create a symbolic link from /usr/local/share/dcmtk-$DCMTK_VER to /usr/local/share/dcmtk
+RUN ln -s /usr/local/share/dcmtk-$DCMTK_VER /usr/local/share/dcmtk
 
-# Set the DCMDICTPATH environment variable
-ENV DCMDICTPATH /usr/local/share/dcmtk-$DCMTK_VER/dicom.dic
+# Set the DCMDICTPATH environment variable to use the symlink
+ENV DCMDICTPATH /usr/local/share/dcmtk/dicom.dic
