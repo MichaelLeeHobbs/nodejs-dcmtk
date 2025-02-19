@@ -6,10 +6,18 @@ ARG DCMTK_VER
 
 WORKDIR /usr/src/app
 
-# Install necessary packages
+# Install necessary packages including libxml2 and its development files
 RUN apk update && \
     apk add --no-cache \
-        libstdc++ g++ gnu-libiconv make cmake git rsync
+        libstdc++ \
+        g++ \
+        gnu-libiconv \
+        make \
+        cmake \
+        git \
+        rsync \
+        libxml2 \
+        libxml2-dev
 
 # Clone the DCMTK repository and checkout the specified version
 RUN git clone https://github.com/DCMTK/dcmtk.git dcmtk-src \
@@ -18,9 +26,9 @@ RUN git clone https://github.com/DCMTK/dcmtk.git dcmtk-src \
     && cd .. \
     && mkdir dcmtk-install
 
-# Configure and build DCMTK
+# Configure and build DCMTK with libxml support
 RUN cd dcmtk-install \
-    && cmake DCMTK_USE_DCMDICTPATH:BOOL=TRUE ../dcmtk-src \
+    && cmake -DDCMTK_USE_DCMDICTPATH:BOOL=TRUE -DDCMTK_WITH_LIBXML2:BOOL=ON ../dcmtk-src \
     && make -j$(nproc)
 
 # Install DCMTK
@@ -49,11 +57,10 @@ RUN apk cache clean \
 # Copy the built DCMTK files from the builder stage
 COPY --from=builder /out/ /
 
-# Create the directory for the symbolic link if it doesn't exist
-#RUN mkdir -p /usr/local/share/dcmtk
+# (Optional) If you want to use a symbolic link for the DICOM dictionary,
+# you can uncomment and adjust the following commands:
+# RUN mkdir -p /usr/local/share/dcmtk
+# RUN ln -s /usr/local/share/dcmtk-$DCMTK_VER/dicom.dic /usr/local/share/dcmtk/dicom.dic
 
-# Create the symbolic link in the final stage
-#RUN ln -s /usr/local/share/dcmtk-$DCMTK_VER/dicom.dic /usr/local/share/dcmtk/dicom.dic
-
-# Set the DCMDICTPATH environment variable to the symlink
+# Set the DCMDICTPATH environment variable
 ENV DCMDICTPATH /usr/local/share/dcmtk-$DCMTK_VER/dicom.dic
