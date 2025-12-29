@@ -3,44 +3,16 @@ name: Docker Image CI & Publish
 
 on: [ push ]
 
-# Old way to build and publish the image
-#jobs:
-#  build:
-#    runs-on: ubuntu-22.04
-#    strategy:
-#      matrix:
-#        dcmtk_version: ['3.6.4', '3.6.6', '3.6.7', '3.6.8']
-#        node_version: [
-#          '22.11.0-alpine3.20', '22.11.0-alpine3.19',
-#          '20.18.0-alpine3.20', '20.18.0-alpine3.19',
-#          '18.20.4-alpine3.20', '18.20.4-alpine3.19',
-#        ]
-#    steps:
-#      - uses: actions/checkout@v1
-#      - name: Build and Publish DCMTK ${{ matrix.dcmtk_version }} NodeJS ${{ matrix.node_version }}
-#        env:
-#          DCMTK_VER: ${{ matrix.dcmtk_version }}
-#          NODE_VER: ${{ matrix.node_version }}
-#        uses: elgohr/Publish-Docker-Github-Action@master
-#        with:
-#          name: michaelleehobbs/nodejs-dcmtk
-#          username: ${{ secrets.DOCKER_USERNAME }}
-#          password: ${{ secrets.DOCKER_PASSWORD }}
-#          buildargs: DCMTK_VER,NODE_VER
-#          tags: "dcmtk-${{ matrix.dcmtk_version }}-nodejs-${{ matrix.node_version }}"
-
 jobs:
   build:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-#        dcmtk_version: ['3.6.4', '3.6.6', '3.6.7', '3.6.8', '3.6.9']
-        dcmtk_version: ['3.6.7', '3.6.8', '3.6.9']
+        dcmtk_version: ['3.6.7', '3.6.8', '3.6.9', '3.7.0']
         node_version: [
-          '22.14.0-alpine3.21', #'22.14.0-alpine3.20',
-          '22.11.0-alpine3.20',
-          '20.18.3-alpine3.21', #'20.18.3-alpine3.20',
-#          '18.20.6-alpine3.21', '18.20.4-alpine3.20',
+          '24.12.0-alpine3.23', #'22.14.0-alpine3.21',
+          '22.21.1-alpine3.23', #'22.11.0-alpine3.20'
+          '20.19.6-alpine3.23', #'20.18.3-alpine3.21',
         ]
     steps:
       - uses: actions/checkout@v3
@@ -63,7 +35,7 @@ jobs:
           build-args: |
             DCMTK_VER=${{ matrix.dcmtk_version }}
             NODE_VER=${{ matrix.node_version }}
-#          platforms: linux/amd64,linux/arm64
+#          platforms: linux/amd64,linux/arm64 # do not support arm because it is god awfully slow on github actions
           platforms: linux/amd64
         env:
           DOCKER_BUILDKIT: 1

@@ -1,12 +1,16 @@
-# ============ Builder stage ============
+# Global build arguments (declared before any FROM)
 ARG NODE_VER
+ARG DCMTK_VER
+
+# ============ Builder stage ============
 FROM alpine:3.18 AS builder
 
+# Re-declare build args for this stage
 ARG DCMTK_VER
 
 WORKDIR /usr/src/app
 
-# Install dev packages so we can compile with XML/zlib support
+# Install dev packages so we can compile with XML/zlib/PNG/TIFF support
 RUN apk update && \
     apk add --no-cache \
         g++ \
@@ -17,7 +21,11 @@ RUN apk update && \
         # XML support
         libxml2-dev \
         # zlib support
-        zlib-dev
+        zlib-dev \
+        # PNG support
+        libpng-dev \
+        # TIFF support
+        tiff-dev
 
 # Get DCMTK source
 RUN git clone https://github.com/DCMTK/dcmtk.git dcmtk-src \
@@ -26,11 +34,13 @@ RUN git clone https://github.com/DCMTK/dcmtk.git dcmtk-src \
     && cd .. \
     && mkdir dcmtk-install
 
-# Configure & build DCMTK with libxml2 (xml) and zlib
+# Configure & build DCMTK with libxml2 (xml), zlib, PNG, and TIFF
 RUN cd dcmtk-install \
     && cmake \
        -DDCMTK_WITH_XML=ON \
        -DDCMTK_WITH_ZLIB=ON \
+       -DDCMTK_WITH_PNG=ON \
+       -DDCMTK_WITH_TIFF=ON \
        -DDCMTK_USE_DCMDICTPATH=ON \
        ../dcmtk-src \
     && make -j"$(nproc)" \
@@ -42,14 +52,19 @@ RUN mkdir /out \
 
 # ============ Final stage ============
 FROM node:$NODE_VER
+
+# Re-declare build args for this stage
+ARG NODE_VER
 ARG DCMTK_VER
 
-# For Alpine-based 'node' images, ensure libxml2 & zlib are installed at runtime:
+# For Alpine-based 'node' images, ensure libxml2, zlib, libpng & libtiff are installed at runtime:
 # (If the base node image is Debian/Ubuntu, you'd do apt-get install libxml2 zlib1g, etc.)
 RUN apk update && \
     apk add --no-cache \
         libxml2 \
-        zlib
+        zlib \
+        libpng \
+        tiff
 
 # Clean up any caches (for Alpine):
 RUN rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
