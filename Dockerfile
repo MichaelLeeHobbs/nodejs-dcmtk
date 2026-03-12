@@ -25,7 +25,9 @@ RUN apk update && \
         # PNG support
         libpng-dev \
         # TIFF support
-        tiff-dev
+        tiff-dev \
+        # TLS + digital signatures
+        openssl-dev
 
 # Get DCMTK source
 RUN git clone https://github.com/DCMTK/dcmtk.git dcmtk-src \
@@ -45,6 +47,7 @@ RUN cd dcmtk-install \
        -DDCMTK_WITH_IJG12=ON \
        -DDCMTK_WITH_IJG16=ON \
        -DDCMTK_WITH_CHARLS=ON \
+       -DDCMTK_WITH_OPENSSL=ON \
        -DDCMTK_USE_DCMDICTPATH=ON \
        ../dcmtk-src \
     && make -j"$(nproc)" \
@@ -68,7 +71,8 @@ RUN apk update && \
         libxml2 \
         zlib \
         libpng \
-        tiff
+        tiff \
+        openssl
 
 # Clean up any caches (for Alpine):
 RUN rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
