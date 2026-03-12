@@ -10,6 +10,10 @@ Docker image based on Node.js Alpine with DCMTK (DICOM Toolkit) pre-installed an
   - ✅ zlib compression
   - ✅ PNG output support (libpng)
   - ✅ TIFF output support (libtiff)
+  - ✅ JPEG codec support (IJG — encode/decode JPEG Baseline, Extended, Lossless)
+  - ✅ JPEG-LS codec support (CharLS — encode/decode JPEG-LS Lossless & Near-Lossless)
+  - ✅ RLE codec support (encode/decode RLE Lossless)
+  - ❌ JPEG 2000 — not available ([dcmjp2k](https://dicom.offis.de/en/dcmtk-expansion-modules/dcmjp2k/) is a commercial OFFIS expansion module, not part of the open-source DCMTK)
 - Multiple DCMTK and Node.js version combinations available
 - All DCMTK command-line tools pre-installed
 

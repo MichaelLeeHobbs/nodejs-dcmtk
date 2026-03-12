@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh issue:*)",
+      "Bash(docker build:*)",
+      "Bash(docker run:*)",
+      "WebFetch(domain:dicom.offis.de)"
+    ]
+  }
+}

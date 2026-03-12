@@ -34,13 +34,17 @@ RUN git clone https://github.com/DCMTK/dcmtk.git dcmtk-src \
     && cd .. \
     && mkdir dcmtk-install
 
-# Configure & build DCMTK with libxml2 (xml), zlib, PNG, and TIFF
+# Configure & build DCMTK with libxml2 (xml), zlib, PNG, TIFF, and codec support
 RUN cd dcmtk-install \
     && cmake \
        -DDCMTK_WITH_XML=ON \
        -DDCMTK_WITH_ZLIB=ON \
        -DDCMTK_WITH_PNG=ON \
        -DDCMTK_WITH_TIFF=ON \
+       -DDCMTK_WITH_IJG8=ON \
+       -DDCMTK_WITH_IJG12=ON \
+       -DDCMTK_WITH_IJG16=ON \
+       -DDCMTK_WITH_CHARLS=ON \
        -DDCMTK_USE_DCMDICTPATH=ON \
        ../dcmtk-src \
     && make -j"$(nproc)" \
