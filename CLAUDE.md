@@ -38,12 +38,12 @@ Build args: `NODE_VER` (e.g. `24.12.0-alpine3.23`), `DCMTK_VER` (e.g. `3.7.0`).
 
 ### CI/CD
 
-GitHub Actions triggers on every push. Matrix strategy builds all DCMTK × Node.js version combinations in parallel on `ubuntu-22.04` using `docker/build-push-action@v4` with BuildKit. Pushes to Docker Hub using `DOCKER_USERNAME` and `DOCKER_PASSWORD` secrets.
+GitHub Actions triggers on every push. Matrix strategy builds all DCMTK × Node.js version combinations in parallel on `ubuntu-22.04` using `docker/build-push-action@v4` with BuildKit. Images are pushed to Docker Hub (using `DOCKER_USERNAME` and `DOCKER_PASSWORD` secrets) only on pushes to `main`/`master`; other branches build without publishing.
 
 ## Current Version Matrix
 
 - **DCMTK:** 3.6.7, 3.6.8, 3.6.9, 3.7.0
-- **Node.js:** 20.19.6, 22.21.1, 24.12.0 (all Alpine 3.23)
+- **Node.js:** 22.23.4, 24.22.1, 26.12.1 (all Alpine 3.24)
 
 To add versions: update the matrix in `src/index.js` and run `npm run build`, or edit `.github/workflows/dockerimage.yml` directly.
 
