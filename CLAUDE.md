@@ -38,7 +38,7 @@ Build args: `NODE_VER` (e.g. `24.12.0-alpine3.23`), `DCMTK_VER` (e.g. `3.7.0`).
 
 ### CI/CD
 
-GitHub Actions triggers on every push. Matrix strategy builds all DCMTK × Node.js version combinations in parallel on `ubuntu-22.04` using `docker/build-push-action@v4` with BuildKit. Pushes to Docker Hub using `DOCKER_USERNAME` and `DOCKER_PASSWORD` secrets.
+GitHub Actions triggers on every push. Matrix strategy builds all DCMTK × Node.js version combinations in parallel on `ubuntu-22.04` using `docker/build-push-action@v4` with BuildKit. Images are pushed to Docker Hub (using `DOCKER_USERNAME` and `DOCKER_PASSWORD` secrets) only on pushes to `main`/`master`; other branches build without publishing.
 
 ## Current Version Matrix
 
