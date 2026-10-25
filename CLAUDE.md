@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Docker image project that combines Node.js Alpine with DCMTK (DICOM Toolkit) pre-compiled. Builds and publishes multi-version images to Docker Hub as `michaelleehobbs/nodejs-dcmtk:dcmtk-{VERSION}-nodejs-{VERSION}`.
+Docker image project that combines Node.js Alpine with DCMTK (DICOM Toolkit) pre-compiled. Builds and publishes multi-version images to Docker Hub as `michaelleehobbs/nodejs-dcmtk:dcmtk-{VERSION}-nodejs-{VERSION}` (exact, e.g. `dcmtk-3.7.0-nodejs-24.22.1-alpine3.24`) and `dcmtk-{VERSION}-nodejs-{NODE_MAJOR}` (floating, e.g. `dcmtk-3.7.0-nodejs-24`).
 
 ## Build & Test Commands
 

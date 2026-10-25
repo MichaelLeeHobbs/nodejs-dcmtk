@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         dcmtk_version: ['3.6.7', '3.6.8', '3.6.9', '3.7.0']
+        # Keep one entry per Node major: each also publishes a floating dcmtk-X-nodejs-<major> tag
         node_version: [
           '26.12.1-alpine3.24',
           '24.22.1-alpine3.24',
@@ -31,12 +32,20 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Compute Node major version
+        id: node
+        env:
+          NODE_VER: ${{ matrix.node_version }}
+        run: echo "major=${NODE_VER%%.*}" >> "$GITHUB_OUTPUT"
+
       - name: Build Docker Image (push on main/master only)
         uses: docker/build-push-action@v4
         with:
           context: .
           push: ${{ env.PUBLISH == 'true' }}
-          tags: michaelleehobbs/nodejs-dcmtk:dcmtk-${{ matrix.dcmtk_version }}-nodejs-${{ matrix.node_version }}
+          tags: |
+            michaelleehobbs/nodejs-dcmtk:dcmtk-${{ matrix.dcmtk_version }}-nodejs-${{ matrix.node_version }}
+            michaelleehobbs/nodejs-dcmtk:dcmtk-${{ matrix.dcmtk_version }}-nodejs-${{ steps.node.outputs.major }}
           build-args: |
             DCMTK_VER=${{ matrix.dcmtk_version }}
             NODE_VER=${{ matrix.node_version }}
