@@ -21,7 +21,14 @@ Docker image based on Node.js Alpine with DCMTK (DICOM Toolkit) pre-installed an
 
 ## Supported Tags
 
-Images are tagged with the pattern: `dcmtk{DCMTK_VERSION}-node{NODE_VERSION}`
+Each DCMTK × Node.js combination is published under two tags:
+
+| Tag pattern | Example | Updates |
+|---|---|---|
+| `dcmtk-{DCMTK_VERSION}-nodejs-{NODE_MAJOR}` | `dcmtk-3.7.0-nodejs-24` | Floating: moves to each new Node.js release in that major line (including security fixes) |
+| `dcmtk-{DCMTK_VERSION}-nodejs-{NODE_VERSION}-alpine{ALPINE_VERSION}` | `dcmtk-3.7.0-nodejs-24.22.1-alpine3.24` | Pinned: never changes |
+
+Use the floating tag to pick up Node.js security releases automatically, or the pinned tag for fully reproducible builds.
 
 **DCMTK Versions:** 3.6.7, 3.6.8, 3.6.9, 3.7.0  
 **Node.js Versions:** 22.x, 24.x, 26.x (Alpine 3.24)
@@ -30,17 +37,17 @@ Images are tagged with the pattern: `dcmtk{DCMTK_VERSION}-node{NODE_VERSION}`
 
 ```bash
 # Pull the image
-docker pull michaelleehobbs/nodejs-dcmtk:dcmtk3.7.0-node24.12.0-alpine3.23
+docker pull michaelleehobbs/nodejs-dcmtk:dcmtk-3.7.0-nodejs-24
 
 # Run interactively
-docker run -it --rm michaelleehobbs/nodejs-dcmtk:dcmtk3.7.0-node24.12.0-alpine3.23 sh
+docker run -it --rm michaelleehobbs/nodejs-dcmtk:dcmtk-3.7.0-nodejs-24 sh
 
 # Convert DICOM to PNG
-docker run --rm -v $(pwd):/data michaelleehobbs/nodejs-dcmtk:dcmtk3.7.0-node24.12.0-alpine3.23 \
+docker run --rm -v $(pwd):/data michaelleehobbs/nodejs-dcmtk:dcmtk-3.7.0-nodejs-24 \
   dcm2pnm --write-png /data/input.dcm /data/output.png
 
 # Convert DICOM to TIFF
-docker run --rm -v $(pwd):/data michaelleehobbs/nodejs-dcmtk:dcmtk3.7.0-node24.12.0-alpine3.23 \
+docker run --rm -v $(pwd):/data michaelleehobbs/nodejs-dcmtk:dcmtk-3.7.0-nodejs-24 \
   dcm2pnm --write-tiff /data/input.dcm /data/output.tiff
 ```
 
@@ -60,7 +67,7 @@ All standard DCMTK command-line tools are available in `/usr/local/bin/`:
 
 Run any tool with `--help` to see options:
 ```bash
-docker run --rm michaelleehobbs/nodejs-dcmtk:dcmtk3.7.0-node24.12.0-alpine3.23 dcm2pnm --help
+docker run --rm michaelleehobbs/nodejs-dcmtk:dcmtk-3.7.0-nodejs-24 dcm2pnm --help
 ```
 
 ## PNG/TIFF Output Options
@@ -83,7 +90,7 @@ dcm2pnm --write-tiff input.dcm output.tiff
 ### As a Base Image
 
 ```dockerfile
-FROM michaelleehobbs/nodejs-dcmtk:dcmtk3.7.0-node24.12.0-alpine3.23
+FROM michaelleehobbs/nodejs-dcmtk:dcmtk-3.7.0-nodejs-24
 
 WORKDIR /app
 COPY package*.json ./
@@ -114,7 +121,7 @@ async function convertDicomToPng(inputPath, outputPath) {
 version: '3.8'
 services:
   dicom-processor:
-    image: michaelleehobbs/nodejs-dcmtk:dcmtk3.7.0-node24.12.0-alpine3.23
+    image: michaelleehobbs/nodejs-dcmtk:dcmtk-3.7.0-nodejs-24
     volumes:
       - ./data:/data
       - ./app:/app
@@ -132,7 +139,7 @@ services:
 git clone https://github.com/michaelleehobbs/nodejs-dcmtk
 cd nodejs-dcmtk
 docker build \
-  --build-arg NODE_VER=24.12.0-alpine3.23 \
+  --build-arg NODE_VER=24.22.1-alpine3.24 \
   --build-arg DCMTK_VER=3.7.0 \
   -t nodejs-dcmtk:custom .
 ```
