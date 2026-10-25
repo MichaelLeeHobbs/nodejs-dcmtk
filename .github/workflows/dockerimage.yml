@@ -6,6 +6,8 @@ on: [ push ]
 jobs:
   build:
     runs-on: ubuntu-22.04
+    # Docker Hub secrets live in the dockerhub environment, which only main/master may deploy from
+    environment: ${{ (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main') && 'dockerhub' || '' }}
     env:
       # Every branch builds; only main/master logs in to and pushes to Docker Hub
       PUBLISH: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}
@@ -56,3 +58,12 @@ jobs:
           BUILDKIT_INLINE_CACHE: 1
           BUILDKIT_FRONTEND_ATTRS: >
             {"moby.buildkit.frontend.inline-squash": "true"}
+
+  # Single stable check for branch protection, since matrix job names change with every version bump
+  ci-success:
+    if: always()
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Require all builds to succeed
+        run: test "${{ needs.build.result }}" = "success"
