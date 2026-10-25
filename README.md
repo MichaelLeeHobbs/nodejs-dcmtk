@@ -24,7 +24,7 @@ Docker image based on Node.js Alpine with DCMTK (DICOM Toolkit) pre-installed an
 Images are tagged with the pattern: `dcmtk{DCMTK_VERSION}-node{NODE_VERSION}`
 
 **DCMTK Versions:** 3.6.7, 3.6.8, 3.6.9, 3.7.0  
-**Node.js Versions:** 20.x, 22.x, 24.x (Alpine 3.23)
+**Node.js Versions:** 22.x, 24.x, 26.x (Alpine 3.24)
 
 ## Quick Start
 
